@@ -13,10 +13,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 import os
-from dotenv import load_dotenv
-
-
-load_dotenv()
 
 '''
 Make sure the required packages are installed: 
@@ -32,7 +28,7 @@ This will install the packages from the requirements.txt for this project.
 '''
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -65,6 +61,7 @@ gravatar = Gravatar(app,
                     force_lower=False,
                     use_ssl=False,
                     base_url=None)
+
 
 # CONFIGURE TABLES
 class BlogPost(db.Model):
@@ -274,8 +271,8 @@ def contact():
         return render_template("contact.html", msg_sent=False)
 
 
-my_email = os.getenv('MY_EMAIL')
-password = os.getenv('PASSWORD')
+my_email = os.environ.get('my_email')
+password = os.environ.get('password')
 
 
 def send_email(name, email, phone, message):
